@@ -1,0 +1,6 @@
+checkpoints
+Faceswap/checkpoints
+Faceswap/data
+db.sqlite3
+Faceswap/__pycache__*
+face_swap/__pycache__*
