@@ -6,12 +6,17 @@ import json
 from Faceswap.faceswap import process
 from PIL import Image
 import io
+from django.shortcuts import render
 
+
+def home_page(request):
+    return render(request, 'index.html')
 
 @csrf_exempt
 def face_swap(request):
     if request.method == 'POST':
-        source_images = request.FILES.getlist('source_images')
+        source_images = request.FILES.getlist('source_images[]')
+        
         target_image = request.FILES.get("target_image")
         source_indexes = request.POST.get("source_indexes")
         target_indexes = request.POST.get("target_indexes")
@@ -54,3 +59,4 @@ def face_swap(request):
             return response
         
     return JsonResponse({"message": "Only POST requests are allowed"}, status=405)
+    

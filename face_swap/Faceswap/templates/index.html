@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Swap</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .img-thumbs {
+            background: #eee;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+            padding: 0.75rem;
+        }
+
+        .img-thumbs-hidden {
+            display: none;
+        }
+
+        .wrapper-thumb {
+            position: relative;
+            display: inline-block;
+            margin: 1rem 0;
+            justify-content: space-around;
+        }
+
+        .img-preview-thumb {
+            background: #fff;
+            border: 1px solid none;
+            border-radius: 0.25rem;
+            box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
+            margin-right: 1rem;
+            max-width: 140px;
+            padding: 0.25rem;
+        }
+
+        .remove-btn {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+            top: -5px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            box-shadow: 0px 0px 3px grey;
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <h3 class="text-center">Faceswap</h3>
+        <div class="row">
+            <div class="col">
+
+                <form action="/face_swap/" method="post" enctype="multipart/form-data" id="form-upload">
+                    <div class="form-group mt-5">
+                        <label for="">Source Images</label>
+                        <input type="file" class="form-control" name="source_images[]" multiple id="source-imgs" />
+                    </div>
+                    <div class="img-thumbs img-thumbs-hidden" id="img-preview"></div>
+                
+                    <div class="form-group mt-3">
+                        <label for="source-indexes">Source Indexes</label>
+                        <input type="text" class="form-control" name="source_indexes" id="source-indexes" placeholder="Enter source indexes">
+                    </div>
+                
+                    <div class="form-group mt-5">
+                        <label for="">Target Image</label>
+                        <input type="file" class="form-control" name="target_image" id="target-img" />
+                    </div>
+                    <div class="img-thumbs img-thumbs-hidden" id="target-img-preview"></div>
+                
+                    <div class="form-group mt-3">
+                        <label for="target-indexes">Target Indexes</label>
+                        <input type="text" class="form-control" name="target_indexes" id="target-indexes" placeholder="Enter target index">
+                    </div>
+                
+                    <button type="submit" class="btn btn-dark">Upload</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var imgUpload = document.getElementById('source-imgs');
+        var targetImg = document.getElementById('target-img');
+        var imgPreview = document.getElementById('img-preview');
+        var targetImgPreview = document.getElementById('target-img-preview');
+        var uploadButton = document.getElementById('upload-button');
+
+        imgUpload.addEventListener('change', function(event) {
+            previewMultipleImages(event, imgPreview);
+        }, true);
+
+        targetImg.addEventListener('change', function(event) {
+            previewSingleImage(event, targetImgPreview);
+        }, true);
+
+        function previewMultipleImages(event, previewContainer) {
+            const totalFiles = event.target.files.length;
+
+            if (totalFiles > 0) {
+                previewContainer.classList.remove('img-thumbs-hidden');
+                previewContainer.innerHTML = ""; 
+            }
+
+            for (let i = 0; i < totalFiles; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('wrapper-thumb');
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(event.target.files[i]);
+                img.classList.add('img-preview-thumb');
+
+                const removeBtn = document.createElement('span');
+                removeBtn.classList.add('remove-btn');
+                removeBtn.textContent = 'x';
+                removeBtn.addEventListener('click', function() {
+                    wrapper.remove();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                previewContainer.appendChild(wrapper);
+            }
+        }
+
+        function previewSingleImage(event, previewContainer) {
+            const totalFiles = event.target.files.length;
+
+            if (totalFiles > 0) {
+                previewContainer.classList.remove('img-thumbs-hidden');
+                previewContainer.innerHTML = ""; 
+            }
+
+            if (totalFiles === 1) {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('wrapper-thumb');
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(event.target.files[0]);
+                img.classList.add('img-preview-thumb');
+
+                const removeBtn = document.createElement('span');
+                removeBtn.classList.add('remove-btn');
+                removeBtn.textContent = 'x';
+                removeBtn.addEventListener('click', function() {
+                    wrapper.remove();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                previewContainer.appendChild(wrapper);
+            }
+        }
+
+        uploadButton.addEventListener('click', function() {
+            const formData = new FormData();
+            const sourceImages = imgUpload.files;
+            const targetImage = targetImg.files[0];
+            const sourceIndexes = document.getElementById('source-indexes').value;
+            const targetIndexes = document.getElementById('target-indexes').value;
+
+            for (let i = 0; i < sourceImages.length; i++) {
+                formData.append('source_images[]', sourceImages[i]);
+            }
+
+            if (targetImage) {
+                formData.append('target_image', targetImage);
+            }
+
+            formData.append('source_indexes', sourceIndexes);
+            formData.append('target_indexes', targetIndexes);
+
+            console.log('FormData ready for upload:', formData);
+    
+        });
+    </script>
+
+</body>
+
+</html>
