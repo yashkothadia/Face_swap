@@ -26,7 +26,8 @@ pip install -r requirements.txt
 [Click here to watch the video](https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap-2024-12-15_15.02.17.mp4)
 
 
-https://github.com/user-attachments/assets/0c44cf4a-ab52-463a-bbbb-136798cfc666
+
+https://github.com/user-attachments/assets/d7646b7d-1b8a-436d-a0b2-06b54b7eb754
 
 
 You have to install ``onnxruntime-gpu`` manually to enable GPU inference, install ``onnxruntime`` by default to use CPU only inference.
