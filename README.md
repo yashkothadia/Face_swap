@@ -51,9 +51,15 @@ you will see interface like this
 we can use CodeFormer or GFPGAN to increase image quality and upscale an image.
 
 ### Data handling 
-we can use temp storage or any database which support images for data storage.<br>
 here i am not saving any images for this project
 
+Retrieve Data from Request.<br>
+Images from source_images and target_image.<br>
+Index values for source index and target index.<br>
+Ensure indices are within valid ranges.<br>
+Process Data<br>
+Pass the validated data to the face-swapping function.<br>
+Response back to swapped image to frontend.
 
 ## Demo Video
 [Click here to watch the video](https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap-2024-12-15_15.02.17.mp4)
