@@ -39,7 +39,7 @@ wget -O ./checkpoints/inswapper_128.onnx https://github.com/facefusion/facefusio
 
 ```bash
 # run django server
-pythom manage.py runserver
+python manage.py runserver
 ```
 
 you will see interface like this
