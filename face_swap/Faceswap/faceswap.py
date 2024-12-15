@@ -174,6 +174,6 @@ def process(source_img: Union[Image.Image, List],
         print("No targgt image found")
 
     result_image = Image.fromarray(cv2.cvtColor(result,cv2.COLOR_BGR2RGB))
-    return JsonResponse({"image":result_image},status=200)
+    return result_image
 
 

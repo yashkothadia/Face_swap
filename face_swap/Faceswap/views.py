@@ -45,10 +45,16 @@ def face_swap(request):
 
         model = "./checkpoints/inswapper_128.onnx"
         result_image = process(all_source_images, target_image,source_indexes, target_indexes, model)
-        if result_image.status_code==200:
+        try:
+            if result_image.status_code==500:
+                return JsonResponse({"message": "Unsupported face configuration"}, status=500)
+        except:
+            pass
+
+        if result_image:
             buffer = io.BytesIO()
             
-            result_image['image'].save(buffer,format='PNG')
+            result_image.save(buffer,format='PNG')
 
             image_bytes = buffer.getvalue()
     
