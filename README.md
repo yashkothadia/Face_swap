@@ -22,13 +22,6 @@ pip install -r requirements.txt
 - You can contol swap the image faces using source_indexes and target_indexes.<br>
 - For example if source and target image have many face then source_indexes = 0,1 and target_indexes=1,3 (indesxes starting from 0) will change faces of target image at 1,3 index from source index 0,1. <br>
 
-## Demo Video
-[Click here to watch the video](https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap-2024-12-15_15.02.17.mp4)
-
-
-
-https://github.com/user-attachments/assets/d7646b7d-1b8a-436d-a0b2-06b54b7eb754
-
 
 You have to install ``onnxruntime-gpu`` manually to enable GPU inference, install ``onnxruntime`` by default to use CPU only inference.
 
@@ -54,5 +47,17 @@ you will see interface like this
 
 <left><img src="https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap.png" width="49%" height="49%"></left>
 
-You will obtain the exact result as above.
+### Improve face swapping image quality
+we can use codeforme or GFPGAN to increase image quality and upscale an image.
+
+### Data handling 
+we can use temp storage or any database which support images for data storage.<br>
+here i am not saving any images for this project
+
+
+## Demo Video
+[Click here to watch the video](https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap-2024-12-15_15.02.17.mp4)
+
+
+https://github.com/user-attachments/assets/d7646b7d-1b8a-436d-a0b2-06b54b7eb754
 
