@@ -48,7 +48,7 @@ you will see interface like this
 <left><img src="https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap.png" width="49%" height="49%"></left>
 
 ### Improve face swapping image quality
-we can use codeforme or GFPGAN to increase image quality and upscale an image.
+we can use CodeFormer or GFPGAN to increase image quality and upscale an image.
 
 ### Data handling 
 we can use temp storage or any database which support images for data storage.<br>
