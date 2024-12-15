@@ -6,9 +6,7 @@ import onnxruntime
 import numpy as np
 from PIL import Image
 from typing import List, Union
-
-import argparse
-
+from django.http import JsonResponse
 
 def get_face_swap_model(model_path:str):
     model = insightface.model_zoo.get_model(model_path)
@@ -168,7 +166,7 @@ def process(source_img: Union[Image.Image, List],
                             temp_frame
                         )
         else:
-            raise Exception("Unsupported face configuration")
+            return JsonResponse({"message": "Unsupported face configuration"}, status=500)
         
         result = temp_frame
 
@@ -176,6 +174,6 @@ def process(source_img: Union[Image.Image, List],
         print("No targgt image found")
 
     result_image = Image.fromarray(cv2.cvtColor(result,cv2.COLOR_BGR2RGB))
-    return result_image
+    return JsonResponse({"image":result_image},status=200)
 
 

@@ -45,11 +45,10 @@ def face_swap(request):
 
         model = "./checkpoints/inswapper_128.onnx"
         result_image = process(all_source_images, target_image,source_indexes, target_indexes, model)
-
-        if result_image:
+        if result_image.status_code==200:
             buffer = io.BytesIO()
             
-            result_image.save(buffer,format='PNG')
+            result_image['image'].save(buffer,format='PNG')
 
             image_bytes = buffer.getvalue()
     
@@ -57,6 +56,8 @@ def face_swap(request):
             response.write(image_bytes)
             
             return response
+        else:
+            return result_image
         
     return JsonResponse({"message": "Only POST requests are allowed"}, status=405)
     
