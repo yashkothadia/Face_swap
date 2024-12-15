@@ -48,6 +48,14 @@ def face_swap(request):
         try:
             if result_image.status_code==500:
                 return JsonResponse({"message": "Unsupported face configuration"}, status=500)
+            elif result_image.status_code==501:
+                return JsonResponse({"Message":"Number of source indexes is greater than the number of faces in the source image"},status=501)
+            elif result_image.status_code==502:
+                return JsonResponse({"Message":"Number of target indexes is greater than the number of faces in the target image"},status=502)
+            elif result_image.status_code==503:
+                return JsonResponse({"Message":f"Source index is higher than the number of faces in the source image"},status=503)
+            elif result_image.status_code==504:
+                return JsonResponse({"Message":f"Target index is higher than the number of faces in the target image"},status=504)
         except:
             pass
 

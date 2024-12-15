@@ -136,10 +136,10 @@ def process(source_img: Union[Image.Image, List],
                 num_target_faces_to_swap = len(target_indexes)
 
                 if num_source_faces_to_swap > num_source_faces:
-                    raise Exception("Number of source indexes is greater than the number of faces in the source image")
+                    return JsonResponse({"Message":"Number of source indexes is greater than the number of faces in the source image"},status=501)
 
                 if num_target_faces_to_swap > num_target_faces:
-                    raise Exception("Number of target indexes is greater than the number of faces in the target image")
+                    return JsonResponse({"Message":"Number of target indexes is greater than the number of faces in the target image"},status=502)
 
                 if num_source_faces_to_swap > num_target_faces_to_swap:
                     num_iterations = num_source_faces_to_swap
@@ -152,10 +152,10 @@ def process(source_img: Union[Image.Image, List],
                         target_index = int(target_indexes[index])
 
                         if source_index > num_source_faces-1:
-                            raise ValueError(f"Source index {source_index} is higher than the number of faces in the source image")
+                            return JsonResponse({"Message":f"Source index {source_index} is higher than the number of faces in the source image"},status=503)
 
                         if target_index > num_target_faces-1:
-                            raise ValueError(f"Target index {target_index} is higher than the number of faces in the target image")
+                            return JsonResponse({"Message":f"Target index {target_index} is higher than the number of faces in the target image"},status=504)
 
                         temp_frame = swap_face(
                             face_swapper,
