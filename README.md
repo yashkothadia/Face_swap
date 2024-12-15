@@ -17,6 +17,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Notes:
+- Here i am using 'buffalo_l' model to detect faces in image and inswapper_128.onnx model to swap the image faces.<br>
+- You can contol swap the image faces using source_indexes and target_indexes.<br>
+- For example source_indexes = 0,1 and target_indexes=1,3 (indesxes starting from 0).<br>
+
 You have to install ``onnxruntime-gpu`` manually to enable GPU inference, install ``onnxruntime`` by default to use CPU only inference.
 
 ## Download Checkpoints
@@ -37,10 +42,9 @@ wget -O ./checkpoints/inswapper_128.onnx https://github.com/facefusion/facefusio
 pythom manage.py runserver
 ```
 
-you will see interface like this (https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap.png)
+you will see interface like this
 
-
-<left><img src="https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap.png" width="49%" height="49%"></left> 
+<left><img src="https://github.com/yashkothadia/Face_swap/blob/main/face_swap/face_swap.png" width="49%" height="49%"></left>
 
 You will obtain the exact result as above.
 
